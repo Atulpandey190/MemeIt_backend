@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 require("../db/conn");
-const Meme = require("../models/memes");
+const  Meme  = require("../models/memes");
 const multer = require("multer");
 const { Mongoose } = require("mongoose");
 
@@ -18,7 +18,7 @@ const upload = multer({
   limits: { fileSize: 1024 * 1024 * 5 },
 });
 router.get("/", (req, res) => {
-  Meme.find({}, (err, items) => { 
+  Meme.find({}, (err, items) => {
     if (err) {
       console.log(err);
       res.status(500).send("An error occurred", err);
@@ -31,9 +31,9 @@ router.get("/", (req, res) => {
 });
 router.get("/:id", (req, res) => {
   // console.log(req.params.id);
-  Meme.findById({ _id : req.params.id}, (err, items) => { 
+  Meme.findById({ _id: req.params.id }, (err, items) => {
     if (err) {
-      console.log(err);
+      console.log(`**` + err);
       res.status(500).send("An error occurred", err);
     } else {
       res.json({
