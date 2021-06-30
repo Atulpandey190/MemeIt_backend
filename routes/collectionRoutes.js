@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 require("../db/conn");
-const  Meme  = require("../models/memes");
+const Meme = require("../models/memes");
 const multer = require("multer");
 const { Mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -31,16 +32,21 @@ router.get("/", (req, res) => {
 });
 router.get("/:id", (req, res) => {
   // console.log(req.params.id);
-  Meme.findById({ _id: req.params.id }, (err, items) => {
-    if (err) {
-      console.log(`**` + err);
-      res.status(500).send("An error occurred", err);
-    } else {
-      res.json({
-        items: items,
-      });
-    }
-  });
+  const idValidator = mongoose.Types.ObjectId.isValid(req.params.id);
+  if (!idValidator) {
+    res.status(500).send("InvalidID");
+  } else {
+    Meme.findById({ _id: req.params.id }, (err, items) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send("An error occurred", err);
+      } else {
+        res.json({
+          items: items,
+        });
+      }
+    });
+  }
 });
 router.post("/", upload.single("memeImage"), (req, res) => {
   //   console.log(req.file);
