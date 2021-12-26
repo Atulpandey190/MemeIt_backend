@@ -1,7 +1,7 @@
 const express = require("express");
 require("./db/conn");
 const Meme = require("./models/memes");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const collectionRouter = require("./routes/collectionRoutes");
 const app = express();
 
