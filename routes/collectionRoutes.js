@@ -5,7 +5,7 @@ const Meme = require("../models/memes");
 const multer = require("multer");
 const { Mongoose } = require("mongoose");
 const mongoose = require("mongoose");
-
+const { generateUploadURL } =require('../s3')
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //     cb(null, "./uploads/");
@@ -48,6 +48,9 @@ router.get("/:id", (req, res) => {
     });
   }
 });
+
+
+
 router.post("/", (req, res) => {
   console.log('abc',req.body);
   // console.log(res);
