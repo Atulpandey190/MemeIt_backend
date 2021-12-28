@@ -6,18 +6,18 @@ const multer = require("multer");
 const { Mongoose } = require("mongoose");
 const mongoose = require("mongoose");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
-  },
-});
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5 },
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "./uploads/");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
+//   },
+// });
+// const upload = multer({
+//   storage: storage,
+//   limits: { fileSize: 1024 * 1024 * 5 },
+// });
 router.get("/", (req, res) => {
   Meme.find({}, (err, items) => {
     if (err) {
@@ -48,12 +48,13 @@ router.get("/:id", (req, res) => {
     });
   }
 });
-router.post("/", upload.single("memeImage"), (req, res) => {
-  //   console.log(req.file);
+router.post("/", (req, res) => {
+  console.log('abc',req.body);
+  // console.log(res);
   const newMeme = new Meme({
     name: req.body.name,
     tags: req.body.tags,
-    memeImage: req.file.path,
+    memeImage: req.body.path,
   });
 
   newMeme
