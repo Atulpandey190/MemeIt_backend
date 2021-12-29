@@ -18,8 +18,8 @@ const s3 = new aws.S3({
   signatureVersion: "v4",
 });
 
- async function generateUploadURL() {
-   console.log("generate url working")
+async function generateUploadURL() {
+  //console.log("generate url working")
   const rawBytes = await randomBytes(16);
   //Unique Image Name
   const imageName = rawBytes.toString("hex");
@@ -34,4 +34,4 @@ const s3 = new aws.S3({
   return uploadURL;
 }
 
-module.exports=generateUploadURL;
+module.exports = generateUploadURL;
